@@ -33,8 +33,8 @@ public class PackPackage extends Model<PackPackage> {
     /**
      * 课时
      */
-	@TableField("class_hour")
-	private Integer classHour;
+	@TableField("clazz_hour")
+	private Integer clazzHour;
     /**
      * 创建时间
      */
@@ -63,12 +63,12 @@ public class PackPackage extends Model<PackPackage> {
 		this.price = price;
 	}
 
-	public Integer getClassHour() {
-		return classHour;
+	public Integer getClazzHour() {
+		return clazzHour;
 	}
 
-	public void setClassHour(Integer classHour) {
-		this.classHour = classHour;
+	public void setClazzHour(Integer clazzHour) {
+		this.clazzHour = clazzHour;
 	}
 
 	public Date getCreateTime() {
@@ -97,7 +97,7 @@ public class PackPackage extends Model<PackPackage> {
 		return "PackPackage{" +
 			"id=" + id +
 			", price=" + price +
-			", classHour=" + classHour +
+			", clazzHour=" + clazzHour +
 			", createTime=" + createTime +
 			", updateTime=" + updateTime +
 			"}";

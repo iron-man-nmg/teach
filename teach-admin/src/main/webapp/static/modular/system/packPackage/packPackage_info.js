@@ -47,7 +47,7 @@ PackPackageInfoDlg.collectData = function() {
     this
     .set('id')
     .set('price')
-    .set('classHour')
+    .set('clazzHour')
     .set('createTime')
     ;
 }
