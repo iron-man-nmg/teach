@@ -1,0 +1,38 @@
+@layout("/common/_container.html"){
+<div class="row">
+    <div class="col-sm-12">
+        <div class="ibox float-e-margins">
+            <div class="ibox-title">
+                <h5>管理</h5>
+            </div>
+            <div class="ibox-content">
+                <div class="row row-lg">
+                    <div class="col-sm-12">
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <#NameCon id="condition" name="名称" />
+                            </div>
+                            <div class="col-sm-3">
+                                <#button name="搜索" icon="fa-search" clickFun="TeacherClass.search()"/>
+                            </div>
+                        </div>
+                        <div class="hidden-xs" id="TeacherClassTableToolbar" role="group">
+                            @if(shiro.hasPermission("/teacherClass/add")){
+                                <#button name="添加" icon="fa-plus" clickFun="TeacherClass.openAddTeacherClass()"/>
+                            @}
+                            @if(shiro.hasPermission("/teacherClass/update")){
+                                <#button name="修改" icon="fa-plus" clickFun="TeacherClass.openTeacherClassDetail()" space="true"/>
+                            @}
+                            @if(shiro.hasPermission("/teacherClass/delete")){
+                                <#button name="删除" icon="fa-plus" clickFun="TeacherClass.delete()" space="true"/>
+                            @}
+                        </div>
+                        <#table id="TeacherClassTable"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="${ctxPath}/static/modular/system/teacherClass/teacherClass.js"></script>
+@}

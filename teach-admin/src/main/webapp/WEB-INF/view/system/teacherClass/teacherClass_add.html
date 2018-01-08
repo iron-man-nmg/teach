@@ -1,0 +1,32 @@
+@layout("/common/_container.html"){
+<div class="ibox float-e-margins">
+    <div class="ibox-content">
+        <div class="form-horizontal">
+
+            <input type="hidden" id="id" value="">
+
+            <div class="row">
+                <div class="col-sm-6 b-r">
+                            <#input id="id" name="" underline="true"/>
+                            <#input id="classId" name="班级id，关联less_class表的id" underline="true"/>
+                            <#input id="teacherId" name="老师id，关联less_teacher表的id"/>
+                </div>
+
+                <div class="col-sm-6">
+                            <#input id="createTime" name="创建时间" underline="true"/>
+                            <#input id="updateTime" name="更新时间" underline="true"/>
+                </div>
+            </div>
+
+            <div class="row btn-group-m-t">
+                <div class="col-sm-10">
+                    <#button btnCss="info" name="提交" id="ensure" icon="fa-check" clickFun="TeacherClassInfoDlg.addSubmit()"/>
+                    <#button btnCss="danger" name="取消" id="cancel" icon="fa-eraser" clickFun="TeacherClassInfoDlg.close()"/>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<script src="${ctxPath}/static/modular/system/teacherClass/teacherClass_info.js"></script>
+@}

@@ -1,0 +1,34 @@
+@layout("/common/_container.html"){
+<div class="ibox float-e-margins">
+    <div class="ibox-content">
+        <div class="form-horizontal">
+
+            <input type="hidden" id="id" value="${item.id}">
+
+            <div class="row">
+                <div class="col-sm-6 b-r">
+                            <#input id="id" name="" value="${item.id}" underline="true"/>
+                            <#input id="dayOfWeek" name="周次" value="${item.dayOfWeek}" underline="true"/>
+                            <#input id="lessonOfDay" name="课次" value="${item.lessonOfDay}" underline="true"/>
+                            <#input id="beginTime" name="开始时间" value="${item.beginTime}" />
+                </div>
+
+                <div class="col-sm-6">
+                            <#input id="endTime" name="结束时间" value="${item.endTime}" underline="true"/>
+                            <#input id="createTime" name="创建时间" value="${item.createTime}" underline="true"/>
+                            <#input id="updateTime" name="更新时间" value="${item.updateTime}" />
+                </div>
+            </div>
+
+            <div class="row btn-group-m-t">
+                <div class="col-sm-10">
+                    <#button btnCss="info" name="提交" id="ensure" icon="fa-check" clickFun="TimetablesInfoDlg.editSubmit()"/>
+                    <#button btnCss="danger" name="取消" id="cancel" icon="fa-eraser" clickFun="TimetablesInfoDlg.close()"/>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<script src="${ctxPath}/static/modular/system/timetables/timetables_info.js"></script>
+@}
