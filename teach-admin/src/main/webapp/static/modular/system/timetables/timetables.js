@@ -14,7 +14,7 @@ var Timetables = {
 Timetables.initColumn = function () {
     return [
         {field: 'selectItem', radio: true},
-            {title: '', field: 'id', visible: true, align: 'center', valign: 'middle'},
+            {title: '', field: 'id', visible: false, align: 'center', valign: 'middle'},
             {title: '周次', field: 'dayOfWeek', visible: true, align: 'center', valign: 'middle'},
             {title: '课次', field: 'lessonOfDay', visible: true, align: 'center', valign: 'middle'},
             {title: '开始时间', field: 'beginTime', visible: true, align: 'center', valign: 'middle'},

@@ -14,8 +14,8 @@ var Teacher = {
 Teacher.initColumn = function () {
     return [
         {field: 'selectItem', radio: true},
-            {title: '', field: 'id', visible: true, align: 'center', valign: 'middle'},
-            {title: '用户id，可关联到sys_user表的id', field: 'userId', visible: true, align: 'center', valign: 'middle'},
+            {title: '', field: 'id', visible: false, align: 'center', valign: 'middle'},
+            {title: '用户id，可关联到sys_user表的id', field: 'userId', visible: false, align: 'center', valign: 'middle'},
             {title: '老师姓名', field: 'name', visible: true, align: 'center', valign: 'middle'},
             {title: '手机号', field: 'mobile', visible: true, align: 'center', valign: 'middle'},
             {title: '性别', field: 'sex', visible: true, align: 'center', valign: 'middle'},

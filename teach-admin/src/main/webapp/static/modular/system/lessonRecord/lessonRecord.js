@@ -14,7 +14,7 @@ var LessonRecord = {
 LessonRecord.initColumn = function () {
     return [
         {field: 'selectItem', radio: true},
-            {title: '', field: 'id', visible: true, align: 'center', valign: 'middle'},
+            {title: '', field: 'id', visible: false, align: 'center', valign: 'middle'},
             {title: '学生id，关联到less_student表的id', field: 'studentId', visible: true, align: 'center', valign: 'middle'},
             {title: '班级id，关联到less_clazz表的id', field: 'clazzId', visible: true, align: 'center', valign: 'middle'},
             {title: '课次', field: 'lessonOfDay', visible: true, align: 'center', valign: 'middle'},

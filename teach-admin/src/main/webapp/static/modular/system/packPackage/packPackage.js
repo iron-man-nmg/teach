@@ -14,7 +14,7 @@ var PackPackage = {
 PackPackage.initColumn = function () {
     return [
         {field: 'selectItem', radio: true},
-            {title: '', field: 'id', visible: true, align: 'center', valign: 'middle'},
+            {title: '', field: 'id', visible: false, align: 'center', valign: 'middle'},
             {title: '价格', field: 'price', visible: true, align: 'center', valign: 'middle'},
             {title: '课时', field: 'clazzHour', visible: true, align: 'center', valign: 'middle'},
             {title: '创建时间', field: 'createTime', visible: true, align: 'center', valign: 'middle'},
