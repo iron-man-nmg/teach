@@ -168,7 +168,6 @@
             </dependency>
         </dependencies>
     </dependencyManagement>
-
     <build>
         <finalName>teach-admin</finalName>
         <pluginManagement>

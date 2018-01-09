@@ -4,10 +4,14 @@ import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.mapper.Wrapper;
 import com.google.common.base.Strings;
 import com.nmg.teach.common.persistence.model.ClazzStudent;
-import com.nmg.teach.common.persistence.model.Menu;
+import com.nmg.teach.common.persistence.model.PackPackage;
+import com.nmg.teach.common.persistence.model.PackPackageStudent;
 import com.nmg.teach.core.base.controller.BaseController;
 import com.nmg.teach.modular.system.service.IClazzStudentService;
+import com.nmg.teach.modular.system.service.IPackPackageService;
+import com.nmg.teach.modular.system.service.IPackPackageStudentService;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.ui.Model;
@@ -37,6 +41,10 @@ public class StudentController extends BaseController {
     private IStudentService studentService;
     @Autowired
     private IClazzStudentService clazzStudentService;
+    @Autowired
+    private IPackPackageStudentService packPackageStudentService;
+    @Autowired
+    private IPackPackageService packPackageService;
 
     /**
      * 跳转到首页
@@ -102,8 +110,22 @@ public class StudentController extends BaseController {
      */
     @RequestMapping(value = "/add")
     @ResponseBody
-    public Object add(Student student) {
-        studentService.insert(student);
+    @Transactional
+    public Object add(Student student, @RequestParam Integer clazzId, @RequestParam Integer packId) {
+        int id = studentService.insertAndGetId(student);
+        ClazzStudent clazzStudent=new ClazzStudent();
+        clazzStudent.setClazzId(clazzId);
+        clazzStudent.setStudentId(id);
+        clazzStudentService.insert(clazzStudent);
+
+
+        PackPackage packPackage = packPackageService.selectById(packId);
+
+        PackPackageStudent packPackageStudent=new PackPackageStudent();
+        packPackageStudent.setPackageId(packId);
+        packPackageStudent.setStudentId(id);
+        packPackageStudent.setRemainingHour(packPackage.getClazzHour());
+        packPackageStudentService.insert(packPackageStudent);
         return super.SUCCESS_TIP;
     }
 

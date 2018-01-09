@@ -18,5 +18,8 @@
     <sql id="Base_Column_List">
         id, user_id AS userId, name, contact_phone AS contactPhone, sex, photo_url AS photoUrl, create_time AS createTime, update_time AS updateTime
     </sql>
-
+	<insert id="insertAndGetId" useGeneratedKeys="true" keyProperty="id" parameterType="com.nmg.teach.common.persistence.model.Student">
+		insert into less_student(`name`,contact_phone,sex,photo_url)
+		values(#{name},#{contactPhone},#{sex},#{photoUrl})
+	</insert>
 </mapper>

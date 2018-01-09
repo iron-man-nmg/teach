@@ -120,6 +120,14 @@ public class ClazzController extends BaseController {
         return tree;
     }
 
-
+    /**
+     * 获取班级的tree列表
+     */
+    @RequestMapping(value = "/treeList")
+    @ResponseBody
+    public List<ZTreeNode> treeList() {
+        List<ZTreeNode> tree = this.clazzDao.tree();
+        return tree;
+    }
 
 }

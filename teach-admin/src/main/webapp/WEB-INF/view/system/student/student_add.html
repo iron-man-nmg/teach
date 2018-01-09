@@ -14,13 +14,23 @@
                 </#select>
 
                 <#input id="packSel" name="套餐" underline="true" readonly="readonly" hidden="packId"
-                        clickFun="UserInfoDlg.showPackSelectTree(); return false;"
+                        clickFun="StudentInfoDlg.showPackSelectTree(); return false;"
                         style="background-color: #ffffff !important;"/>
 
                 <#input id="clazzSel" name="班级" underline="true" readonly="readonly" hidden="clazzId"
-                        clickFun="UserInfoDlg.showClazzSelectTree(); return false;"
+                        clickFun="StudentInfoDlg.showClazzSelectTree(); return false;"
                         style="background-color: #ffffff !important;"/>
 
+            </div>
+            <!-- 这是部门选择的下拉框 -->
+            <div id="menuPackContent" class="menuContent"
+                 style="display: none; position: absolute; z-index: 200;">
+                <ul id="treePack" class="ztree tree-box" style="width: 249px !important;"></ul>
+            </div>
+            <!-- 这是部门选择的下拉框 -->
+            <div id="menuClazzContent" class="menuContent"
+                 style="display: none; position: absolute; z-index: 200;">
+                <ul id="treeClazz" class="ztree tree-box" style="width: 249px !important;"></ul>
             </div>
 
             <div class="row btn-group-m-t">

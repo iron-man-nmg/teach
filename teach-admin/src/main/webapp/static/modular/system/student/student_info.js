@@ -2,7 +2,7 @@
  * 初始化详情对话框
  */
 var StudentInfoDlg = {
-    studentInfoData : {},
+    studentInfoData: {},
     validateFields: {
         name: {
             validators: {
@@ -45,7 +45,7 @@ var StudentInfoDlg = {
 /**
  * 清除数据
  */
-StudentInfoDlg.clearData = function() {
+StudentInfoDlg.clearData = function () {
     this.studentInfoData = {};
 }
 
@@ -55,7 +55,7 @@ StudentInfoDlg.clearData = function() {
  * @param key 数据的名称
  * @param val 数据的具体值
  */
-StudentInfoDlg.set = function(key, val) {
+StudentInfoDlg.set = function (key, val) {
     this.studentInfoData[key] = (typeof val == "undefined") ? $("#" + key).val() : val;
     return this;
 }
@@ -66,29 +66,30 @@ StudentInfoDlg.set = function(key, val) {
  * @param key 数据的名称
  * @param val 数据的具体值
  */
-StudentInfoDlg.get = function(key) {
+StudentInfoDlg.get = function (key) {
     return $("#" + key).val();
 }
 
 /**
  * 关闭此对话框
  */
-StudentInfoDlg.close = function() {
+StudentInfoDlg.close = function () {
     parent.layer.close(window.parent.Student.layerIndex);
 }
 
 /**
  * 收集数据
  */
-StudentInfoDlg.collectData = function() {
+StudentInfoDlg.collectData = function () {
     this
-    .set('id')
-    .set('userId')
-    .set('name')
-    .set('contactPhone')
-    .set('sex')
-    .set('photoUrl')
-    .set('createTime')
+        .set('id')
+        .set('userId')
+        .set('name')
+        .set('contactPhone')
+        .set('sex')
+        .set('photoUrl')
+        .set('clazzId')
+        .set('packId')
     ;
 }
 
@@ -101,7 +102,7 @@ StudentInfoDlg.collectData = function() {
  * @param treeNode
  * @returns
  */
-UserInfoDlg.onClickClazz = function (e, treeId, treeNode) {
+StudentInfoDlg.onClickClazz = function (e, treeId, treeNode) {
     $("#clazzSel").attr("value", instanceClazz.getSelectedVal());
     $("#clazzId").attr("value", treeNode.id);
 };
@@ -113,7 +114,7 @@ UserInfoDlg.onClickClazz = function (e, treeId, treeNode) {
  * @param treeNode
  * @returns
  */
-UserInfoDlg.onClickPack = function (e, treeId, treeNode) {
+StudentInfoDlg.onClickPack = function (e, treeId, treeNode) {
     $("#packSel").attr("value", instancePack.getSelectedVal());
     $("#packId").attr("value", treeNode.id);
 };
@@ -122,7 +123,7 @@ UserInfoDlg.onClickPack = function (e, treeId, treeNode) {
  *
  * @returns
  */
-UserInfoDlg.showClazzSelectTree = function () {
+StudentInfoDlg.showClazzSelectTree = function () {
     var cityObj = $("#clazzSel");
     var cityOffset = $("#clazzSel").offset();
     $("#menuClazzContent").css({
@@ -135,7 +136,7 @@ UserInfoDlg.showClazzSelectTree = function () {
 /**
  * 隐藏班级选择的树
  */
-UserInfoDlg.hideClazzSelectTree = function () {
+StudentInfoDlg.hideClazzSelectTree = function () {
     $("#menuClazzContent").fadeOut("fast");
     $("body").unbind("mousedown", onClazzDown);// mousedown当鼠标按下就可以触发，不用弹起
 };
@@ -143,7 +144,7 @@ UserInfoDlg.hideClazzSelectTree = function () {
 /**
  * 隐藏角色选择的树
  */
-UserInfoDlg.hidePackSelectTree = function () {
+StudentInfoDlg.hidePackSelectTree = function () {
     $("#menuPackContent").fadeOut("fast");
     $("body").unbind("mousedown", onPackDown);// mousedown当鼠标按下就可以触发，不用弹起
 };
@@ -152,7 +153,7 @@ UserInfoDlg.hidePackSelectTree = function () {
  *
  * @returns
  */
-UserInfoDlg.showPackSelectTree = function () {
+StudentInfoDlg.showPackSelectTree = function () {
     var cityObj = $("#packSel");
     var cityOffset = $("#packSel").offset();
     $("#menuPackContent").css({
@@ -165,17 +166,17 @@ UserInfoDlg.showPackSelectTree = function () {
 /**
  * 提交添加
  */
-StudentInfoDlg.addSubmit = function() {
+StudentInfoDlg.addSubmit = function () {
 
     this.clearData();
     this.collectData();
 
     //提交信息
-    var ajax = new $ax(Feng.ctxPath + "/student/add", function(data){
+    var ajax = new $ax(Feng.ctxPath + "/student/add", function (data) {
         Feng.success("添加成功!");
         window.parent.Student.table.refresh();
         StudentInfoDlg.close();
-    },function(data){
+    }, function (data) {
         Feng.error("添加失败!" + data.responseJSON.message + "!");
     });
     ajax.set(this.studentInfoData);
@@ -183,45 +184,45 @@ StudentInfoDlg.addSubmit = function() {
 }
 function onPackDown(event) {
     if (!(event.target.id == "menuBtn" || event.target.id == "menuContent" || $(
-            event.target).parents("#menuContent").length > 0)) {
-        UserInfoDlg.hidePackSelectTree();
+            event.target).parents("#menuPackContent").length > 0)) {
+        StudentInfoDlg.hidePackSelectTree();
     }
 }
 
 function onClazzDown(event) {
     if (!(event.target.id == "menuBtn" || event.target.id == "menuContent" || $(
-            event.target).parents("#menuContent").length > 0)) {
-        UserInfoDlg.hideClazzSelectTree();
+            event.target).parents("#menuClazzContent").length > 0)) {
+        StudentInfoDlg.hideClazzSelectTree();
     }
 }
 /**
  * 提交修改
  */
-StudentInfoDlg.editSubmit = function() {
+StudentInfoDlg.editSubmit = function () {
 
     this.clearData();
     this.collectData();
 
     //提交信息
-    var ajax = new $ax(Feng.ctxPath + "/student/update", function(data){
+    var ajax = new $ax(Feng.ctxPath + "/student/update", function (data) {
         Feng.success("修改成功!");
         window.parent.Student.table.refresh();
         StudentInfoDlg.close();
-    },function(data){
+    }, function (data) {
         Feng.error("修改失败!" + data.responseJSON.message + "!");
     });
     ajax.set(this.studentInfoData);
     ajax.start();
 }
 
-$(function() {
-    var ztreePack = new $ZTree("treePack", "/pack/tree");
-    ztreePack.bindOnClick(UserInfoDlg.onClickPack);
+$(function () {
+    var ztreePack = new $ZTree("treePack", "/packPackage/tree");
+    ztreePack.bindOnClick(StudentInfoDlg.onClickPack);
     ztreePack.init();
     instancePack = ztreePack;
 
-    var ztreeClazz = new $ZTree("treeClazz", "/clazz/tree");
-    ztreeClazz.bindOnClick(UserInfoDlg.onClickClazz);
+    var ztreeClazz = new $ZTree("treeClazz", "/clazz/treeList");
+    ztreeClazz.bindOnClick(StudentInfoDlg.onClickClazz);
     ztreeClazz.init();
     instanceClazz = ztreeClazz;
     //初始化性别选项

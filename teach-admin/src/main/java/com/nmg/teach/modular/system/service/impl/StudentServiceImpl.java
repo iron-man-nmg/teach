@@ -16,5 +16,7 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class StudentServiceImpl extends ServiceImpl<StudentMapper, Student> implements IStudentService {
-	
+	public int  insertAndGetId(Student student){
+	    return baseMapper.insertAndGetId(student);
+    }
 }
