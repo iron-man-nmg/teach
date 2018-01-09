@@ -1,6 +1,9 @@
 package com.nmg.teach.modular.system.controller;
 
 import com.nmg.teach.core.base.controller.BaseController;
+import com.nmg.teach.core.node.ZTreeNode;
+import com.nmg.teach.modular.system.dao.ClazzDao;
+import com.nmg.teach.modular.system.dao.DeptDao;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -11,6 +14,9 @@ import com.nmg.teach.core.log.LogObjectHolder;
 import org.springframework.web.bind.annotation.RequestParam;
 import com.nmg.teach.common.persistence.model.Clazz;
 import com.nmg.teach.modular.system.service.IClazzService;
+
+import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * 控制器
@@ -26,7 +32,8 @@ public class ClazzController extends BaseController {
 
     @Autowired
     private IClazzService clazzService;
-
+    @Resource
+    ClazzDao clazzDao;
     /**
      * 跳转到首页
      */
@@ -101,4 +108,18 @@ public class ClazzController extends BaseController {
     public Object detail(@PathVariable("clazzId") Integer clazzId) {
         return clazzService.selectById(clazzId);
     }
+
+    /**
+     * 获取班级的tree列表
+     */
+    @RequestMapping(value = "/tree")
+    @ResponseBody
+    public List<ZTreeNode> tree() {
+        List<ZTreeNode> tree = this.clazzDao.tree();
+        tree.add(ZTreeNode.createParent());
+        return tree;
+    }
+
+
+
 }

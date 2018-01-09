@@ -92,8 +92,15 @@ Student.delete = function () {
  */
 Student.search = function () {
     var queryData = {};
-    queryData['condition'] = $("#condition").val();
+    queryData['clazzId'] = Student.clazzId;
+    queryData['name'] = $("#condition").val();
     Student.table.refresh({query: queryData});
+};
+
+
+Student.onClickClazz = function (e, treeId, treeNode) {
+    Student.clazzId = treeNode.id;
+    Student.search();
 };
 
 $(function () {
@@ -101,4 +108,8 @@ $(function () {
     var table = new BSTable(Student.id, "/student/list", defaultColunms);
     table.setPaginationType("client");
     Student.table = table.init();
+
+    var ztree = new $ZTree("clazzTree", "/clazz/tree");
+    ztree.bindOnClick(Student.onClickClazz);
+    ztree.init();
 });

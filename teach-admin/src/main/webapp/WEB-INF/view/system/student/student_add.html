@@ -6,19 +6,21 @@
             <input type="hidden" id="id" value="">
 
             <div class="row">
-                <div class="col-sm-6 b-r">
-                            <#input id="id" name="" underline="true"/>
-                            <#input id="userId" name="用户id，可关联到sys_user表的id" underline="true"/>
-                            <#input id="name" name="姓名" underline="true"/>
-                            <#input id="contactPhone" name="联系方式"/>
-                </div>
+                <#input id="name" name="姓名" underline="true"/>
+                <#input id="contactPhone" name="联系方式" underline="true"/>
+                <#select id="sex" name="性别" underline="true">
+                    <option value="1">男</option>
+                    <option value="2">女</option>
+                </#select>
 
-                <div class="col-sm-6">
-                            <#input id="sex" name="性别" underline="true"/>
-                            <#input id="photoUrl" name="照片" underline="true"/>
-                            <#input id="createTime" name="创建时间" underline="true"/>
-                            <#input id="updateTime" name="更新时间" underline="true"/>
-                </div>
+                <#input id="packSel" name="套餐" underline="true" readonly="readonly" hidden="packId"
+                        clickFun="UserInfoDlg.showPackSelectTree(); return false;"
+                        style="background-color: #ffffff !important;"/>
+
+                <#input id="clazzSel" name="班级" underline="true" readonly="readonly" hidden="clazzId"
+                        clickFun="UserInfoDlg.showClazzSelectTree(); return false;"
+                        style="background-color: #ffffff !important;"/>
+
             </div>
 
             <div class="row btn-group-m-t">

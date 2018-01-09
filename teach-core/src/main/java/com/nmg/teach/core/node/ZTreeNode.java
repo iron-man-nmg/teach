@@ -71,7 +71,7 @@ public class ZTreeNode {
 		ZTreeNode zTreeNode = new ZTreeNode();
 		zTreeNode.setChecked(true);
 		zTreeNode.setId(0L);
-		zTreeNode.setName("顶级");
+		zTreeNode.setName("全部");
 		zTreeNode.setOpen(true);
 		zTreeNode.setpId(0L);
 		return zTreeNode;
