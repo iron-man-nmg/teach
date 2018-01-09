@@ -11,6 +11,13 @@ var UserInfoDlg = {
                 }
             }
         },
+        phone: {
+            validators: {
+                notEmpty: {
+                    message: '号码不能为空'
+                }
+            }
+        },
         name: {
             validators: {
                 notEmpty: {
@@ -22,6 +29,13 @@ var UserInfoDlg = {
             validators: {
                 notEmpty: {
                     message: '部门不能为空'
+                }
+            }
+        },
+        roleSel: {
+            validators: {
+                notEmpty: {
+                    message: '角色不能为空'
                 }
             }
         },
@@ -97,7 +111,18 @@ UserInfoDlg.onClickDept = function (e, treeId, treeNode) {
     $("#citySel").attr("value", instance.getSelectedVal());
     $("#deptid").attr("value", treeNode.id);
 };
-
+/**
+ * 点击角色input框时
+ *
+ * @param e
+ * @param treeId
+ * @param treeNode
+ * @returns
+ */
+UserInfoDlg.onClickRole = function (e, treeId, treeNode) {
+    $("#roleSel").attr("value", instanceRole.getSelectedVal());
+    $("#roleid").attr("value", treeNode.id);
+};
 /**
  * 显示部门选择的树
  *
@@ -113,6 +138,23 @@ UserInfoDlg.showDeptSelectTree = function () {
 
     $("body").bind("mousedown", onBodyDown);
 };
+
+/**
+ * 显示角色选择的树
+ *
+ * @returns
+ */
+UserInfoDlg.showRoleSelectTree = function () {
+    var cityObj = $("#roleSel");
+    var cityOffset = $("#roleSel").offset();
+    $("#menuRoleContent").css({
+        left: cityOffset.left + "px",
+        top: cityOffset.top + cityObj.outerHeight() + "px"
+    }).slideDown("fast");
+
+    $("body").bind("mousedown", onRoleBodyDown);
+};
+
 
 /**
  * 显示用户详情部门选择的树
@@ -139,11 +181,19 @@ UserInfoDlg.hideDeptSelectTree = function () {
 };
 
 /**
+ * 隐藏角色选择的树
+ */
+UserInfoDlg.hideRoleSelectTree = function () {
+    $("#menuRoleContent").fadeOut("fast");
+    $("body").unbind("mousedown", onBodyDown);// mousedown当鼠标按下就可以触发，不用弹起
+};
+
+/**
  * 收集数据
  */
 UserInfoDlg.collectData = function () {
     this.set('id').set('account').set('sex').set('password').set('avatar')
-        .set('email').set('name').set('birthday').set('rePassword').set('deptid').set('phone');
+        .set('email').set('name').set('birthday').set('rePassword').set('deptid').set('phone').set('roleid');
 };
 
 /**
@@ -246,6 +296,12 @@ function onBodyDown(event) {
     }
 }
 
+function onRoleBodyDown(event) {
+    if (!(event.target.id == "menuBtn" || event.target.id == "menuContent" || $(
+            event.target).parents("#menuContent").length > 0)) {
+        UserInfoDlg.hideRoleSelectTree();
+    }
+}
 $(function () {
     Feng.initValidator("userInfoForm", UserInfoDlg.validateFields);
 
@@ -253,6 +309,13 @@ $(function () {
     ztree.bindOnClick(UserInfoDlg.onClickDept);
     ztree.init();
     instance = ztree;
+
+    var ztreeRole = new $ZTree("treeRole", "/role/roleTreeListBySystem");
+    ztreeRole.bindOnClick(UserInfoDlg.onClickRole);
+    ztreeRole.init();
+    instanceRole = ztreeRole;
+
+
 
     //初始化性别选项
     $("#sex").val($("#sexValue").val());

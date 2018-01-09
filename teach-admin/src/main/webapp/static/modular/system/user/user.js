@@ -157,7 +157,7 @@ MgrUser.unfreeze = function () {
 MgrUser.resetPwd = function () {
     if (this.check()) {
         var userId = this.seItem.id;
-        parent.layer.confirm('是否重置密码为111111？', {
+        parent.layer.confirm('是否重置密码为123456？', {
             btn: ['确定', '取消'],
             shade: false //不显示遮罩
         }, function () {

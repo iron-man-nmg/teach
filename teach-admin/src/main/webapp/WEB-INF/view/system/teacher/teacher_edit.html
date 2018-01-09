@@ -6,19 +6,11 @@
             <input type="hidden" id="id" value="${item.id}">
 
             <div class="row">
-                <div class="col-sm-6 b-r">
-                            <#input id="id" name="" value="${item.id}" underline="true"/>
-                            <#input id="userId" name="用户id，可关联到sys_user表的id" value="${item.userId}" underline="true"/>
                             <#input id="name" name="老师姓名" value="${item.name}" underline="true"/>
                             <#input id="mobile" name="手机号" value="${item.mobile}" />
-                </div>
-
-                <div class="col-sm-6">
                             <#input id="sex" name="性别" value="${item.sex}" underline="true"/>
                             <#input id="photoUrl" name="照片" value="${item.photoUrl}" underline="true"/>
-                            <#input id="createTime" name="创建时间" value="${item.createTime}" underline="true"/>
-                            <#input id="updateTime" name="更新时间" value="${item.updateTime}" />
-                </div>
+            </div>
             </div>
 
             <div class="row btn-group-m-t">

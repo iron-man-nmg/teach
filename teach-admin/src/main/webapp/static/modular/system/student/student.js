@@ -15,7 +15,7 @@ Student.initColumn = function () {
     return [
         {field: 'selectItem', radio: true},
             {title: '', field: 'id', visible: false, align: 'center', valign: 'middle'},
-            {title: '用户id，可关联到sys_user表的id',visible: false, field: 'userId', visible: true, align: 'center', valign: 'middle'},
+            {title: '用户id，可关联到sys_user表的id',visible: false, field: 'userId',align: 'center', valign: 'middle'},
             {title: '姓名', field: 'name', visible: true, align: 'center', valign: 'middle'},
             {title: '联系方式', field: 'contactPhone', visible: true, align: 'center', valign: 'middle'},
             {title: '性别', field: 'sex', visible: true, align: 'center', valign: 'middle'},

@@ -17,6 +17,7 @@ import com.nmg.teach.core.cache.CacheKit;
 import com.nmg.teach.core.exception.TeachException;
 import com.nmg.teach.core.log.LogObjectHolder;
 import com.nmg.teach.core.node.ZTreeNode;
+import com.nmg.teach.core.shiro.ShiroKit;
 import com.nmg.teach.core.util.Convert;
 import com.nmg.teach.core.util.ToolUtil;
 import com.nmg.teach.modular.system.dao.RoleDao;
@@ -217,6 +218,23 @@ public class RoleController extends BaseController {
         return roleTreeList;
     }
 
+    /**
+     * 获取角色列表
+     */
+    @RequestMapping(value = "/roleTreeListBySystem")
+    @ResponseBody
+    public List<ZTreeNode> roleTreeListBySystem() {
+        User theUser = this.userMapper.selectById(ShiroKit.getUser().getId());
+        String roleid = theUser.getRoleid();
+        if (ToolUtil.isEmpty(roleid)) {
+            List<ZTreeNode> roleTreeList = this.roleDao.roleTreeList();
+            return roleTreeList;
+        } else {
+            String[] strArray = Convert.toStrArray(",", roleid);
+            List<ZTreeNode> roleTreeListByUserId = this.roleDao.roleTreeListByRoleId(strArray);
+            return roleTreeListByUserId;
+        }
+    }
     /**
      * 获取角色列表
      */

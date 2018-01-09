@@ -11,7 +11,7 @@ public interface Const {
     /**
      * 系统默认的管理员密码
      */
-    String DEFAULT_PWD = "111111";
+    String DEFAULT_PWD = "123456";
 
     /**
      * 管理员角色的名字
