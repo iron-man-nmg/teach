@@ -1,0 +1,29 @@
+@layout("/common/_container.html"){
+
+<div class="ibox float-e-margins">
+    <div class="ibox-content">
+        <div class="form-horizontal">
+
+            <input type="hidden" id="id" value="">
+
+            <div class="row">
+                <#input id="name" name="名字" underline="true"/>
+                <#input id="price" name="价格" underline="true"/>
+                <#input id="clazzHour" name="课时" underline="true" />
+
+                <#input id="desc" name="备注" underline="true"/>
+
+            </div>
+
+            <div class="row btn-group-m-t">
+                <div class="col-sm-10">
+                    <#button btnCss="info" name="提交" id="ensure" icon="fa-check" clickFun="PackPackageInfoDlg.addSubmit()"/>
+                    <#button btnCss="danger" name="取消" id="cancel" icon="fa-eraser" clickFun="PackPackageInfoDlg.close()"/>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<script src="${ctxPath}/static/modular/system/packPackage/packPackage_info.js"></script>
+@}
