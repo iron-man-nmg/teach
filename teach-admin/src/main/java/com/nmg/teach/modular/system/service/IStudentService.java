@@ -12,5 +12,5 @@ import com.baomidou.mybatisplus.service.IService;
  * @since 2018-01-08
  */
 public interface IStudentService extends IService<Student> {
-    public int  insertAndGetId(Student student);
+     int  insertAndGetId(Student student);
 }

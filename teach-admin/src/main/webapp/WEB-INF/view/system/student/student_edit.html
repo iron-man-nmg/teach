@@ -4,21 +4,24 @@
         <div class="form-horizontal">
 
             <input type="hidden" id="id" value="${item.id}">
-
+            <input type="hidden" id="sexValue" value="${item.sex}">
             <div class="row">
-                <div class="col-sm-6 b-r">
-                            <#input id="id" name="" value="${item.id}" underline="true"/>
-                            <#input id="userId" name="用户id，可关联到sys_user表的id" value="${item.userId}" underline="true"/>
-                            <#input id="name" name="姓名" value="${item.name}" underline="true"/>
-                            <#input id="contactPhone" name="联系方式" value="${item.contactPhone}" />
-                </div>
+                <#input id="name" name="姓名" value="${item.name}" underline="true"/>
+                <#input id="contactPhone" name="联系方式" value="${item.contactPhone}" />
 
-                <div class="col-sm-6">
-                            <#input id="sex" name="性别" value="${item.sex}" underline="true"/>
-                            <#input id="photoUrl" name="照片" value="${item.photoUrl}" underline="true"/>
-                            <#input id="createTime" name="创建时间" value="${item.createTime}" underline="true"/>
-                            <#input id="updateTime" name="更新时间" value="${item.updateTime}" />
-                </div>
+
+                <#select id="sex" name="性别" underline="true">
+                    <option value="1">男</option>
+                    <option value="2">女</option>
+                </#select>
+                <#input id="packSel" name="套餐" underline="true" readonly="readonly" hidden="packId" hiddenValue="${pack.id}" value="${pack.name}"
+                        clickFun="StudentInfoDlg.showPackSelectTree(); return false;"
+                        style="background-color: #ffffff !important;"/>
+
+                <#input id="clazzSel" name="班级" underline="true" readonly="readonly" hidden="clazzId" hiddenValue="${clazz.id}" value="${clazz.name}"
+                        clickFun="StudentInfoDlg.showClazzSelectTree(); return false;"
+                        style="background-color: #ffffff !important;"/>
+
             </div>
 
             <div class="row btn-group-m-t">

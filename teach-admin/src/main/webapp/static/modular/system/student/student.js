@@ -14,14 +14,15 @@ var Student = {
 Student.initColumn = function () {
     return [
         {field: 'selectItem', radio: true},
-            {title: '', field: 'id', visible: false, align: 'center', valign: 'middle'},
-            {title: '用户id，可关联到sys_user表的id',visible: false, field: 'userId',align: 'center', valign: 'middle'},
-            {title: '姓名', field: 'name', visible: true, align: 'center', valign: 'middle'},
-            {title: '联系方式', field: 'contactPhone', visible: true, align: 'center', valign: 'middle'},
-            {title: '性别', field: 'sex', visible: true, align: 'center', valign: 'middle'},
-            {title: '照片', field: 'photoUrl', visible: true, align: 'center', valign: 'middle'},
-            {title: '创建时间', field: 'createTime', visible: true, align: 'center', valign: 'middle'},
-            {title: '更新时间', field: 'updateTime', visible: true, align: 'center', valign: 'middle'}
+        {title: '', field: 'id', visible: false, align: 'center', valign: 'middle'},
+        {title: '', field: 'clazzId', visible: false, align: 'center', valign: 'middle'},
+        {title: '', field: 'packId', visible: false, align: 'center', valign: 'middle'},
+        {title: '用户id，可关联到sys_user表的id', visible: false, field: 'userId', align: 'center', valign: 'middle'},
+        {title: '姓名', field: 'name', visible: true, align: 'center', valign: 'middle'},
+        {title: '联系方式', field: 'contactPhone', visible: true, align: 'center', valign: 'middle'},
+        {title: '性别', field: 'sexName', visible: true, align: 'center', valign: 'middle'},
+        {title: '班级', field: 'clazzName', visible: true, align: 'center', valign: 'middle'},
+        {title: '套餐', field: 'packName', visible: true, align: 'center', valign: 'middle'}
     ];
 };
 
@@ -30,10 +31,10 @@ Student.initColumn = function () {
  */
 Student.check = function () {
     var selected = $('#' + this.id).bootstrapTable('getSelections');
-    if(selected.length == 0){
+    if (selected.length == 0) {
         Feng.info("请先选中表格中的某一记录！");
         return false;
-    }else{
+    } else {
         Student.seItem = selected[0];
         return true;
     }
@@ -82,7 +83,7 @@ Student.delete = function () {
         }, function (data) {
             Feng.error("删除失败!" + data.responseJSON.message + "!");
         });
-        ajax.set("studentId",this.seItem.id);
+        ajax.set("studentId", this.seItem.id);
         ajax.start();
     }
 };

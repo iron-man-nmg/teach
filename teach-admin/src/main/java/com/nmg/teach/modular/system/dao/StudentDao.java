@@ -21,14 +21,7 @@ public interface StudentDao {
      * @return
      * @date 2017年2月12日 下午9:14:34
      */
-    List<Map<String, Object>> selectStudents(@Param("dataScope") DataScope dataScope, @Param("name") String name, @Param("classId") Integer classId);
+    List<Map<String, Object>> selectStudents( @Param("name") String name, @Param("clazzId") Integer clazzId);
 
-    /**
-     * 设置用户的角色
-     *
-     * @return
-     * @date 2017年2月13日 下午7:31:30
-     */
-    int setClass(@Param("studentId") Integer studentId, @Param("classId") String classId);
 
 }

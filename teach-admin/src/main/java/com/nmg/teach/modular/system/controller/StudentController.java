@@ -2,28 +2,23 @@ package com.nmg.teach.modular.system.controller;
 
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.mapper.Wrapper;
-import com.google.common.base.Strings;
-import com.nmg.teach.common.persistence.model.ClazzStudent;
-import com.nmg.teach.common.persistence.model.PackPackage;
-import com.nmg.teach.common.persistence.model.PackPackageStudent;
+import com.nmg.teach.common.persistence.model.*;
 import com.nmg.teach.core.base.controller.BaseController;
-import com.nmg.teach.modular.system.service.IClazzStudentService;
-import com.nmg.teach.modular.system.service.IPackPackageService;
-import com.nmg.teach.modular.system.service.IPackPackageStudentService;
+import com.nmg.teach.core.log.LogObjectHolder;
+import com.nmg.teach.modular.system.dao.StudentDao;
+import com.nmg.teach.modular.system.service.*;
+import com.nmg.teach.modular.system.warpper.StudentWarpper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.beans.factory.annotation.Autowired;
-import com.nmg.teach.core.log.LogObjectHolder;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import com.nmg.teach.common.persistence.model.Student;
-import com.nmg.teach.modular.system.service.IStudentService;
+import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 控制器
@@ -36,7 +31,8 @@ import java.util.List;
 public class StudentController extends BaseController {
 
     private String PREFIX = "/system/student/";
-
+    @Autowired
+    private StudentDao studentDao;
     @Autowired
     private IStudentService studentService;
     @Autowired
@@ -45,6 +41,8 @@ public class StudentController extends BaseController {
     private IPackPackageStudentService packPackageStudentService;
     @Autowired
     private IPackPackageService packPackageService;
+    @Autowired
+    private IClazzService clazzService;
 
     /**
      * 跳转到首页
@@ -69,6 +67,18 @@ public class StudentController extends BaseController {
     public String studentUpdate(@PathVariable Integer studentId, Model model) {
         Student student = studentService.selectById(studentId);
         model.addAttribute("item", student);
+
+        Wrapper<ClazzStudent> clazzStudentWrapper = new EntityWrapper<>();
+        clazzStudentWrapper.eq("student_id", student.getId());
+        ClazzStudent clazzStudent = clazzStudentService.selectOne(clazzStudentWrapper);
+        Clazz clazz = clazzService.selectById(clazzStudent.getClazzId());
+        model.addAttribute("clazz", clazz);
+
+        Wrapper<PackPackageStudent> packStudentWrapper = new EntityWrapper<>();
+        packStudentWrapper.eq("student_id", student.getId());
+        PackPackageStudent packPackageStudent = packPackageStudentService.selectOne(packStudentWrapper);
+        PackPackage packPackage = packPackageService.selectById(packPackageStudent.getPackageId());
+        model.addAttribute("pack", packPackage);
         LogObjectHolder.me().set(student);
         return PREFIX + "student_edit.html";
     }
@@ -78,31 +88,9 @@ public class StudentController extends BaseController {
      */
     @RequestMapping(value = "/list")
     @ResponseBody
-    public Object list(@RequestParam(required = false) String clazzId, @RequestParam(required = false) String name) {
-        List<Student> list = new ArrayList<>();
-        List<ClazzStudent> clazzStudents = new ArrayList<>();
-        if (!Strings.isNullOrEmpty(clazzId)) {
-            Wrapper<ClazzStudent> clazzStudentWrapper = new EntityWrapper<>();
-
-            clazzStudentWrapper = clazzStudentWrapper.eq("clazzId", clazzId);
-
-            clazzStudents = clazzStudentService.selectList(clazzStudentWrapper);
-
-        }
-        Wrapper<Student> wrapper = new EntityWrapper<>();
-
-        if (clazzStudents != null && clazzStudents.size() > 0) {
-            List<Integer> studentIds = new ArrayList<>();
-            for (ClazzStudent clazzStudent : clazzStudents) {
-                studentIds.add(clazzStudent.getStudentId());
-            }
-            wrapper.in("id", studentIds);
-        }
-        if (!Strings.isNullOrEmpty(name)) {
-            wrapper = wrapper.eq("name", name);
-        }
-        list = studentService.selectList(wrapper);
-        return list;
+    public Object list(@RequestParam(required = false) Integer clazzId, @RequestParam(required = false) String name) {
+        List<Map<String, Object>> list = studentDao.selectStudents(name, clazzId);
+        return new StudentWarpper(list).warp();
     }
 
     /**
@@ -113,7 +101,7 @@ public class StudentController extends BaseController {
     @Transactional
     public Object add(Student student, @RequestParam Integer clazzId, @RequestParam Integer packId) {
         int id = studentService.insertAndGetId(student);
-        ClazzStudent clazzStudent=new ClazzStudent();
+        ClazzStudent clazzStudent = new ClazzStudent();
         clazzStudent.setClazzId(clazzId);
         clazzStudent.setStudentId(id);
         clazzStudentService.insert(clazzStudent);
@@ -121,7 +109,7 @@ public class StudentController extends BaseController {
 
         PackPackage packPackage = packPackageService.selectById(packId);
 
-        PackPackageStudent packPackageStudent=new PackPackageStudent();
+        PackPackageStudent packPackageStudent = new PackPackageStudent();
         packPackageStudent.setPackageId(packId);
         packPackageStudent.setStudentId(id);
         packPackageStudent.setRemainingHour(packPackage.getClazzHour());
@@ -155,6 +143,8 @@ public class StudentController extends BaseController {
     @RequestMapping(value = "/detail/{studentId}")
     @ResponseBody
     public Object detail(@PathVariable("studentId") Integer studentId) {
+
+
         return studentService.selectById(studentId);
     }
 }
