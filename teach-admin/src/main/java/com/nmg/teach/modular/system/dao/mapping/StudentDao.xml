@@ -7,7 +7,7 @@
         select
         ls.id, user_id AS userId, ls.name, ls.contact_phone AS contactPhone,
         ls.sex, photo_url AS photoUrl,
-        lcs.clazz_id AS clazzId,lc.name AS clazzName,pp.id AS packId,pp.name AS packName
+        lcs.clazz_id AS clazzId,lc.name AS clazzName,pp.id AS packId,pp.name AS packName, pps.remaining_hour AS remainHour
         from less_student ls
         LEFT JOIN less_clazz_student lcs on lcs.student_id=ls.id
 

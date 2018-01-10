@@ -18,7 +18,8 @@ Student.initColumn = function () {
         {title: '联系方式', field: 'contactPhone', visible: true, align: 'center', valign: 'middle'},
         {title: '性别', field: 'sexName', visible: true, align: 'center', valign: 'middle'},
         {title: '班级', field: 'clazzName', visible: true, align: 'center', valign: 'middle'},
-        {title: '套餐', field: 'packName', visible: true, align: 'center', valign: 'middle'}
+        {title: '套餐', field: 'packName', visible: true, align: 'center', valign: 'middle'},
+        {title: '剩余课时', field: 'remainHour', visible: true, align: 'center', valign: 'middle'}
     ];
 };
 
