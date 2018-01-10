@@ -22,5 +22,12 @@ public interface LessonRecordDao {
      */
     List<Map<String, Object>> selectRecord(@Param("name") String name);
 
+    /**
+     * 根据条件查询用户列表
+     *
+     * @return
+     * @date 2017年2月12日 下午9:14:34
+     */
+    List<Map<String, Object>> selectClazzStudent(@Param("name") String name);
 
 }

@@ -3,21 +3,28 @@
 <mapper namespace="com.nmg.teach.modular.system.dao.LessonRecordDao">
 
 
-    <select id="selectStudents" resultType="map">
+    <select id="selectRecord" resultType="map">
 
         SELECT llr.id,llr.teacher_id AS teachId ,lt.name AS teachName,llr.lesson_of_day lessOfDay,
         llr.student_id AS studentId ,ls.name studentName,llr.clazz_id AS clazzId
-        , lc.name AS clazzName  , llr.create_time As createTime
-        FROM less_lesson_record llr LEFT JOIN  less_clazz lc on llr.clazz_id=lc.id
+        , lc.name AS clazzName , llr.create_time As createTime
+        FROM less_lesson_record llr LEFT JOIN less_clazz lc on llr.clazz_id=lc.id
         LEFT JOIN less_student ls on llr.student_id=ls.id
         LEFT JOIN less_teacher lt on llr.teacher_id =lt.id
         <trim prefixOverrides="and|or" prefix="where">
             <if test="name != null and name != ''">
-                 ls.name like CONCAT('%',#{name},'%')) OR  lt.name like CONCAT('%',#{name},'%'))
+                ls.name like CONCAT('%',#{name},'%')) OR lt.name like CONCAT('%',#{name},'%'))
             </if>
 
         </trim>
         order by id ASC ;
+
+    </select>
+    <select id="selectClazzStudent" resultType="map">
+
+    SELECT ls.id , ls.name, pps.remaining_hour from less_studen ls
+    LEFT JOIN  pack_package_student pps on pps.student_id=ls.id
+    JOIN  less_clazz_student lcs on lcs.student_id=ls.id and lcs.clazz_id=#{clazzId}
 
     </select>
 
