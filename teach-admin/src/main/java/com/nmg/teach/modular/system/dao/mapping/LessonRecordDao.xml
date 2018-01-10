@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.nmg.teach.modular.system.dao.LessonRecordDao">
+
+
+    <select id="selectStudents" resultType="map">
+
+        SELECT llr.id,llr.teacher_id AS teachId ,lt.name AS teachName,llr.lesson_of_day lessOfDay,
+        llr.student_id AS studentId ,ls.name studentName,llr.clazz_id AS clazzId
+        , lc.name AS clazzName  , llr.create_time As createTime
+        FROM less_lesson_record llr LEFT JOIN  less_clazz lc on llr.clazz_id=lc.id
+        LEFT JOIN less_student ls on llr.student_id=ls.id
+        LEFT JOIN less_teacher lt on llr.teacher_id =lt.id
+        <trim prefixOverrides="and|or" prefix="where">
+            <if test="name != null and name != ''">
+                 ls.name like CONCAT('%',#{name},'%')) OR  lt.name like CONCAT('%',#{name},'%'))
+            </if>
+
+        </trim>
+        order by id ASC ;
+
+    </select>
+
+
+</mapper>
