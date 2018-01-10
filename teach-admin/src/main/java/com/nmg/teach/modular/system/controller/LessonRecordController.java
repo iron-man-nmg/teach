@@ -1,6 +1,7 @@
 package com.nmg.teach.modular.system.controller;
 
 import com.nmg.teach.core.base.controller.BaseController;
+import com.nmg.teach.modular.system.dao.LessonRecordDao;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -20,12 +21,15 @@ import com.nmg.teach.modular.system.service.ILessonRecordService;
  */
 @Controller
 @RequestMapping("/lessonRecord")
-public class LessonRecordController extends BaseController {
+public class
+LessonRecordController extends BaseController {
 
     private String PREFIX = "/system/lessonRecord/";
 
     @Autowired
     private ILessonRecordService lessonRecordService;
+    @Autowired
+    private LessonRecordDao lessonRecordDao;
 
     /**
      * 跳转到首页
@@ -38,7 +42,7 @@ public class LessonRecordController extends BaseController {
     /**
      * 跳转到添加
      */
-    @RequestMapping("/lessonRecord_add")
+    @RequestMapping("/add")
     public String lessonRecordAdd() {
         return PREFIX + "lessonRecord_add.html";
     }
@@ -49,7 +53,7 @@ public class LessonRecordController extends BaseController {
     @RequestMapping("/lessonRecord_update/{lessonRecordId}")
     public String lessonRecordUpdate(@PathVariable Integer lessonRecordId, Model model) {
         LessonRecord lessonRecord = lessonRecordService.selectById(lessonRecordId);
-        model.addAttribute("item",lessonRecord);
+        model.addAttribute("item", lessonRecord);
         LogObjectHolder.me().set(lessonRecord);
         return PREFIX + "lessonRecord_edit.html";
     }
@@ -59,16 +63,17 @@ public class LessonRecordController extends BaseController {
      */
     @RequestMapping(value = "/list")
     @ResponseBody
-    public Object list(String condition) {
-        return lessonRecordService.selectList(null);
+    public Object list(String name) {
+
+        return lessonRecordDao.selectRecord(name);
     }
 
     /**
      * 新增
      */
-    @RequestMapping(value = "/add")
+    @RequestMapping(value = "/signIn")
     @ResponseBody
-    public Object add(LessonRecord lessonRecord) {
+    public Object signIn(LessonRecord lessonRecord) {
         lessonRecordService.insert(lessonRecord);
         return super.SUCCESS_TIP;
     }

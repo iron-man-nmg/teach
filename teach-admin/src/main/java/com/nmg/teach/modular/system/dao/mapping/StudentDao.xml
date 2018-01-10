@@ -20,7 +20,7 @@
 
         <trim prefixOverrides="and|or" prefix="where">
             <if test="name != null and name != ''">
-                AND name like CONCAT('%',#{name},'%'))
+                AND ls.name like CONCAT('%',#{name},'%'))
             </if>
             <if test="clazzId != null ">
                 AND lc.id = clazzId

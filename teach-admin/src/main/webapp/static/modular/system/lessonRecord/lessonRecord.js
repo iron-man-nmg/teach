@@ -14,13 +14,10 @@ var LessonRecord = {
 LessonRecord.initColumn = function () {
     return [
         {field: 'selectItem', radio: true},
-            {title: '', field: 'id', visible: false, align: 'center', valign: 'middle'},
-            {title: '学生id，关联到less_student表的id', field: 'studentId', visible: false, align: 'center', valign: 'middle'},
-            {title: '班级id，关联到less_clazz表的id', field: 'clazzId', visible: false, align: 'center', valign: 'middle'},
-            {title: '课次', field: 'lessonOfDay', visible: true, align: 'center', valign: 'middle'},
-            {title: '老师id，可以关联到less_teacher的id', field: 'teacherId', visible: false, align: 'center', valign: 'middle'},
-            {title: '创建时间', field: 'createTime', visible: true, align: 'center', valign: 'middle'},
-            {title: '更新时间', field: 'updateTime', visible: true, align: 'center', valign: 'middle'}
+            {title: '班级', field: 'clazzName', visible: true, align: 'center', valign: 'middle'},
+            {title: '老师', field: 'teachName', visible: true, align: 'center', valign: 'middle'},
+            {title: '学生', field: 'studentName', visible: true, align: 'center', valign: 'middle'},
+            {title: '上课时间', field: 'createTime', visible: true, align: 'center', valign: 'middle'}
     ];
 };
 
@@ -91,7 +88,7 @@ LessonRecord.delete = function () {
  */
 LessonRecord.search = function () {
     var queryData = {};
-    queryData['condition'] = $("#condition").val();
+    queryData['name'] = $("#condition").val();
     LessonRecord.table.refresh({query: queryData});
 };
 
