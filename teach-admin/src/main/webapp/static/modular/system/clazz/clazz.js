@@ -14,8 +14,7 @@ var Clazz = {
 Clazz.initColumn = function () {
     return [
         {field: 'selectItem', radio: true},
-            {title: '', field: 'id', visible: false, align: 'center', valign: 'middle'},
-            {title: '班级名称', field: 'name', visible: true, align: 'center', valign: 'middle'}
+             {title: '班级名称', field: 'name', visible: true, align: 'center', valign: 'middle'}
     ];
 };
 
