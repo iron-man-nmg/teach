@@ -2,7 +2,30 @@
  * 初始化详情对话框
  */
 var TeacherInfoDlg = {
-    teacherInfoData : {}
+    teacherInfoData : {},
+    validateFields: {
+        name: {
+            validators: {
+                notEmpty: {
+                    message: '姓名不能为空'
+                }
+            }
+        },
+        mobile: {
+            validators: {
+                notEmpty: {
+                    message: '联系方式不能为空'
+                }
+            }
+        },
+        sex: {
+            validators: {
+                notEmpty: {
+                    message: '性别不能为空'
+                }
+            }
+        }
+    }
 };
 
 /**

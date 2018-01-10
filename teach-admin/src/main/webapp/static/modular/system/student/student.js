@@ -47,7 +47,7 @@ Student.openAddStudent = function () {
     var index = layer.open({
         type: 2,
         title: '添加',
-        area: ['800px', '550px'], //宽高
+        area: ['800px', '560px'], //宽高
         fix: false, //不固定
         maxmin: true,
         content: Feng.ctxPath + '/student/student_add'
@@ -63,7 +63,7 @@ Student.openStudentDetail = function () {
         var index = layer.open({
             type: 2,
             title: '详情',
-            area: ['800px', '550px'], //宽高
+            area: ['800px', '560px'], //宽高
             fix: false, //不固定
             maxmin: true,
             content: Feng.ctxPath + '/student/student_update/' + Student.seItem.id

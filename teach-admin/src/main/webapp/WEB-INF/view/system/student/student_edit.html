@@ -7,7 +7,7 @@
             <input type="hidden" id="sexValue" value="${item.sex}">
             <div class="row">
                 <#input id="name" name="姓名" value="${item.name}" underline="true"/>
-                <#input id="contactPhone" name="联系方式" value="${item.contactPhone}" />
+                <#input id="contactPhone" name="联系方式" underline="true" value="${item.contactPhone}" />
 
 
                 <#select id="sex" name="性别" underline="true">
@@ -18,7 +18,7 @@
                         clickFun="StudentInfoDlg.showPackSelectTree(); return false;"
                         style="background-color: #ffffff !important;"/>
 
-                <#input id="clazzSel" name="班级" underline="true" readonly="readonly" hidden="clazzId" hiddenValue="${clazz.id}" value="${clazz.name}"
+                <#input id="clazzSel" name="班级"  readonly="readonly" hidden="clazzId" hiddenValue="${clazz.id}" value="${clazz.name}"
                         clickFun="StudentInfoDlg.showClazzSelectTree(); return false;"
                         style="background-color: #ffffff !important;"/>
 

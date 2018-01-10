@@ -18,10 +18,15 @@ Teacher.initColumn = function () {
             {title: '用户id，可关联到sys_user表的id', field: 'userId', visible: false, align: 'center', valign: 'middle'},
             {title: '老师姓名', field: 'name', visible: true, align: 'center', valign: 'middle'},
             {title: '手机号', field: 'mobile', visible: true, align: 'center', valign: 'middle'},
-            {title: '性别', field: 'sex', visible: true, align: 'center', valign: 'middle'},
-            {title: '照片', field: 'photoUrl', visible: true, align: 'center', valign: 'middle'},
-            {title: '创建时间', field: 'createTime', visible: true, align: 'center', valign: 'middle'},
-            {title: '更新时间', field: 'updateTime', visible: true, align: 'center', valign: 'middle'}
+            {title: '性别', field: 'sexName', visible: true, align: 'center', valign: 'middle',formatter : function (value, row, index) {
+                if (row['sex'] === 1) {
+                    return '男';
+                }
+                if (row['sex'] === 2) {
+                    return '女';
+                }
+                return value;
+            }},
     ];
 };
 
@@ -46,7 +51,7 @@ Teacher.openAddTeacher = function () {
     var index = layer.open({
         type: 2,
         title: '添加',
-        area: ['800px', '420px'], //宽高
+        area: ['800px', '400px'], //宽高
         fix: false, //不固定
         maxmin: true,
         content: Feng.ctxPath + '/teacher/teacher_add'
@@ -62,7 +67,7 @@ Teacher.openTeacherDetail = function () {
         var index = layer.open({
             type: 2,
             title: '详情',
-            area: ['800px', '420px'], //宽高
+            area: ['800px', '400px'], //宽高
             fix: false, //不固定
             maxmin: true,
             content: Feng.ctxPath + '/teacher/teacher_update/' + Teacher.seItem.id

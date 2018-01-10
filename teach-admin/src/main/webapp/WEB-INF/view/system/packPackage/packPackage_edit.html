@@ -6,18 +6,12 @@
             <input type="hidden" id="id" value="${item.id}">
 
             <div class="row">
-                <div class="col-sm-6 b-r">
-                            <#input id="id" name="" value="${item.id}" underline="true"/>
-                            <#input id="name" name="名字" value="${item.name}" underline="true"/>
-                            <#input id="price" name="价格" value="${item.price}" underline="true"/>
-                            <#input id="clazzHour" name="课时" value="${item.clazzHour}" />
-                </div>
+                <#input id="name" name="名字" value="${item.name}" underline="true"/>
+                <#input id="price" name="价格" value="${item.price}" underline="true"/>
+                <#input id="clazzHour" name="课时" value="${item.clazzHour}" />
 
-                <div class="col-sm-6">
-                            <#input id="desc" name="备注" value="${item.desc}" underline="true"/>
-                            <#input id="createTime" name="创建时间" value="${item.createTime}" underline="true"/>
-                            <#input id="updateTime" name="更新时间" value="${item.updateTime}" />
-                </div>
+                <#input id="desc" name="备注" value="${item.desc}" underline="true"/>
+
             </div>
 
             <div class="row btn-group-m-t">
