@@ -129,5 +129,13 @@ public class ClazzController extends BaseController {
         List<ZTreeNode> tree = this.clazzDao.tree();
         return tree;
     }
-
+    /**
+     * 获取班级的tree列表
+     */
+    @RequestMapping(value = "/treeListByTeachId")
+    @ResponseBody
+    public List<ZTreeNode> treeListByTeachId(@PathVariable("teachId") Integer teachId) {
+        List<ZTreeNode> tree = this.clazzDao.treeByTeachId(teachId);
+        return tree;
+    }
 }

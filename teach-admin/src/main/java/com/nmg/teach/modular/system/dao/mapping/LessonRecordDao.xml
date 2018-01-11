@@ -22,8 +22,9 @@
     </select>
     <select id="selectClazzStudent" resultType="map">
 
-    SELECT ls.id , ls.name, pps.remaining_hour from less_studen ls
+    SELECT ls.id , ls.name, pps.remaining_hour AS remainHour,pp.name AS packName from less_studen ls
     LEFT JOIN  pack_package_student pps on pps.student_id=ls.id
+    LEFT JOIN  pack_pakcage pp on pps.package_id= pp.id
     JOIN  less_clazz_student lcs on lcs.student_id=ls.id and lcs.clazz_id=#{clazzId}
 
     </select>

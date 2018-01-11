@@ -1,99 +1,85 @@
 /**
- * 初始化详情对话框
+ * 管理初始化
  */
-var LessonRecordInfoDlg = {
-    lessonRecordInfoData : {}
+var LessonStudent = {
+    id: "LessonStudentTable",	//表格id
+    seItem: null,		//选中的条目
+    table: null,
+    layerIndex: -1
 };
 
 /**
- * 清除数据
+ * 初始化表格的列
  */
-LessonRecordInfoDlg.clearData = function() {
-    this.lessonRecordInfoData = {};
-}
+LessonStudent.initColumn = function () {
+    return [
+        {field: 'selectItem', check: true},
+        {title: '姓名', field: 'studentName', visible: true, align: 'center', valign: 'middle'},
+        {title: '套餐', field: 'packName', visible: true, align: 'center', valign: 'middle'},
+        {title: '剩余课时', field: 'remainHour', visible: true, align: 'center', valign: 'middle'}
+    ];
+};
 
 /**
- * 设置对话框中的数据
+ * 检查是否选中
+ */
+LessonStudent.check = function () {
+    var selected = $('#' + this.id).bootstrapTable('getSelections');
+    if(selected.length == 0){
+        Feng.info("请先选中表格中的某一记录！");
+        return false;
+    }else{
+        LessonStudent.seItem = selected[0];
+        return true;
+    }
+};
+/**
+ * 显示班级选择的树
  *
- * @param key 数据的名称
- * @param val 数据的具体值
+ * @returns
  */
-LessonRecordInfoDlg.set = function(key, val) {
-    this.lessonRecordInfoData[key] = (typeof val == "undefined") ? $("#" + key).val() : val;
-    return this;
+LessonStudent.showClazzSelectTree = function () {
+    var cityObj = $("#clazzSel");
+    var cityOffset = $("#clazzSel").offset();
+    $("#menuClazzContent").css({
+        left: cityOffset.left + "px",
+        top: cityOffset.top + cityObj.outerHeight() + "px"
+    }).slideDown("fast");
+
+    $("body").bind("mousedown", onClazzDown);
+};
+/**
+ * 隐藏班级选择的树
+ */
+LessonStudent.hideClazzSelectTree = function () {
+    $("#menuClazzContent").fadeOut("fast");
+    $("body").unbind("mousedown", onClazzDown);// mousedown当鼠标按下就可以触发，不用弹起
+};
+
+function onClazzDown(event) {
+    if (!(event.target.id == "menuBtn" || event.target.id == "menuContent" || $(
+            event.target).parents("#menuClazzContent").length > 0)) {
+        LessonStudent.hideClazzSelectTree();
+    }
 }
 
 /**
- * 设置对话框中的数据
- *
- * @param key 数据的名称
- * @param val 数据的具体值
+ * 查询列表
  */
-LessonRecordInfoDlg.get = function(key) {
-    return $("#" + key).val();
-}
+LessonStudent.search = function () {
+    var queryData = {};
+    queryData['clazzId'] = $("#clazzId").val();
+    LessonStudent.table.refresh({query: queryData});
+};
 
-/**
- * 关闭此对话框
- */
-LessonRecordInfoDlg.close = function() {
-    parent.layer.close(window.parent.LessonRecord.layerIndex);
-}
+$(function () {
+    var defaultColunms = LessonStudent.initColumn();
+    var table = new BSTable(LessonStudent.id, "/listStudent/list", defaultColunms);
+    table.setPaginationType("client");
+    LessonStudent.table = table.init();
 
-/**
- * 收集数据
- */
-LessonRecordInfoDlg.collectData = function() {
-    this
-    .set('id')
-    .set('studentId')
-    .set('clazzId')
-    .set('lessonOfDay')
-    .set('teacherId')
-    .set('createTime')
-    ;
-}
-
-/**
- * 提交添加
- */
-LessonRecordInfoDlg.addSubmit = function() {
-
-    this.clearData();
-    this.collectData();
-
-    //提交信息
-    var ajax = new $ax(Feng.ctxPath + "/lessonRecord/add", function(data){
-        Feng.success("添加成功!");
-        window.parent.LessonRecord.table.refresh();
-        LessonRecordInfoDlg.close();
-    },function(data){
-        Feng.error("添加失败!" + data.responseJSON.message + "!");
-    });
-    ajax.set(this.lessonRecordInfoData);
-    ajax.start();
-}
-
-/**
- * 提交修改
- */
-LessonRecordInfoDlg.editSubmit = function() {
-
-    this.clearData();
-    this.collectData();
-
-    //提交信息
-    var ajax = new $ax(Feng.ctxPath + "/lessonRecord/update", function(data){
-        Feng.success("修改成功!");
-        window.parent.LessonRecord.table.refresh();
-        LessonRecordInfoDlg.close();
-    },function(data){
-        Feng.error("修改失败!" + data.responseJSON.message + "!");
-    });
-    ajax.set(this.lessonRecordInfoData);
-    ajax.start();
-}
-
-$(function() {
-
+    var ztreeClazz = new $ZTree("treeClazz", "/clazz/treeList?teachId="+LessonStudent.get("teachId"));
+    ztreeClazz.bindOnClick(StudentInfoDlg.onClickClazz);
+    ztreeClazz.init();
+    instanceClazz = ztreeClazz;
 });

@@ -3,16 +3,21 @@ package com.nmg.teach.modular.system.controller;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.mapper.Wrapper;
 import com.google.common.base.Strings;
-import com.nmg.teach.common.persistence.model.ClazzStudent;
+import com.nmg.teach.common.exception.BizExceptionEnum;
+import com.nmg.teach.common.persistence.dao.UserMapper;
 import com.nmg.teach.common.persistence.model.LessonRecord;
 import com.nmg.teach.common.persistence.model.PackPackageStudent;
-import com.nmg.teach.common.persistence.model.Student;
+import com.nmg.teach.common.persistence.model.Teacher;
+import com.nmg.teach.common.persistence.model.User;
 import com.nmg.teach.core.base.controller.BaseController;
+import com.nmg.teach.core.exception.TeachException;
 import com.nmg.teach.core.log.LogObjectHolder;
+import com.nmg.teach.core.shiro.ShiroKit;
+import com.nmg.teach.core.util.ToolUtil;
 import com.nmg.teach.modular.system.dao.LessonRecordDao;
 import com.nmg.teach.modular.system.service.ILessonRecordService;
 import com.nmg.teach.modular.system.service.IPackPackageStudentService;
-import com.nmg.teach.modular.system.service.IStudentService;
+import com.nmg.teach.modular.system.service.ITeacherService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,6 +27,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -43,9 +49,11 @@ LessonRecordController extends BaseController {
     @Autowired
     private LessonRecordDao lessonRecordDao;
     @Autowired
-    private IStudentService studentService;
+    private ITeacherService teacherService;
     @Autowired
     private IPackPackageStudentService packPackageStudentService;
+    @Resource
+    private UserMapper userMapper;
 
     /**
      * 跳转到首页
@@ -59,7 +67,23 @@ LessonRecordController extends BaseController {
      * 跳转到添加
      */
     @RequestMapping("/add")
-    public String lessonRecordAdd() {
+    public String lessonRecordAdd(Model model) {
+        Integer userId = ShiroKit.getUser().getId();
+        if (ToolUtil.isEmpty(userId)) {
+            throw new TeachException(BizExceptionEnum.REQUEST_NULL);
+        }
+        User user = this.userMapper.selectById(userId);
+        Wrapper<Teacher> teacherWrapper = new EntityWrapper<>();
+        teacherWrapper.eq("mobile", user.getPhone());
+        //老师
+        List<Teacher> teachers = teacherService.selectList(teacherWrapper);
+        if (teachers == null || teachers.size() <= 0) {
+            throw new TeachException(BizExceptionEnum.TEACH_NULL);
+        }
+
+        model.addAttribute("teachId", teachers.get(0).getId());
+        model.addAttribute("teachName", teachers.get(0).getName());
+        LogObjectHolder.me().set(model);
         return PREFIX + "lessonRecord_add.html";
     }
 

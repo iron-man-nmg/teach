@@ -5,5 +5,9 @@
     <select id="tree" resultType="com.nmg.teach.core.node.ZTreeNode">
         select id,`name` from less_clazz
     </select>
+    <select id="treeByTeachId" resultType="com.nmg.teach.core.node.ZTreeNode">
+        select id,`name` from less_clazz lc  JOIN  less_teach_clazz ltc ON ltc.clazz_id=lc.id
+        where ltc.teach_id=${teach_id}
+    </select>
 
 </mapper>
