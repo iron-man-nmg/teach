@@ -10,12 +10,12 @@
             <div class="ibox-content">
                 <div class="row row-lg">
                     <div class="col-sm-12">
-                        <#button btnCss="info" name="上课" id="ensure" icon="fa-check" clickFun="StudentInfoDlg.addSubmit()"/>
+                        <div class="col-sm-3">
+                            <#button btnCss="info" name="上课" id="ensure" icon="fa-check" clickFun="LessonStudent.addSubmit()"/>
+                        </div>
                     </div>
-                    <div class="col-sm-12">
-
+                    <div class="col-sm-12 nmg">
                         <div class="col-lg-2 col-sm-3">
-
                             <div class="panel panel-default">
                                 <div class="panel-heading">班级</div>
                                 <div class="panel-body clazz-tree">
@@ -27,8 +27,6 @@
                             <#table id="LessonStudentTable"/>
                         </div>
                     </div>
-
-
                 </div>
             </div>
         </div>
