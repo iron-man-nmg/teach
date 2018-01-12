@@ -36,7 +36,26 @@ LessonStudent.check = function () {
 LessonStudent.onClickClazz = function (e, treeId, treeNode) {
     LessonStudent.clazzId = treeNode.id;
     LessonStudent.search();
+    $('[name=btSelectAll]').prop('checked', true);
 };
+
+LessonStudent.addSubmit = function () {
+    var selected = $('#' + this.id).bootstrapTable('getSelections');
+    var ids = "";
+    for (i = 0 ; i < selected.length; i++) {
+        ids = ids + "," + selected[i].id;
+    }
+    ids = ids.substring(1, ids.length);
+    //提交信息
+    var ajax = new $ax(Feng.ctxPath + "/lessonRecord/signIn", function (data) {
+        Feng.success("签到成功!");
+        LessonStudent.search();
+    }, function (data) {
+        Feng.error("签到失败!" + data.responseJSON.message + "!");
+    });
+    ajax.set("studentIds", ids);
+    ajax.start();
+}
 /**
  * 查询列表
  */
