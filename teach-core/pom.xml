@@ -91,5 +91,11 @@
             <artifactId>ehcache-core</artifactId>
             <scope>provided</scope>
         </dependency>
+
+        <!-- poi -->
+        <dependency>
+            <groupId>org.apache.poi</groupId>
+            <artifactId>poi-ooxml</artifactId>
+        </dependency>
     </dependencies>
 </project>
