@@ -183,14 +183,14 @@ StudentInfoDlg.addSubmit = function () {
     ajax.start();
 }
 function onPackDown(event) {
-    if (!(event.target.id == "menuBtn" || event.target.id == "menuContent" || $(
+    if (!(event.target.id == "menuBtn" || event.target.id == "menuPackContent" || $(
             event.target).parents("#menuPackContent").length > 0)) {
         StudentInfoDlg.hidePackSelectTree();
     }
 }
 
 function onClazzDown(event) {
-    if (!(event.target.id == "menuBtn" || event.target.id == "menuContent" || $(
+    if (!(event.target.id == "menuBtn" || event.target.id == "menuClazzContent" || $(
             event.target).parents("#menuClazzContent").length > 0)) {
         StudentInfoDlg.hideClazzSelectTree();
     }

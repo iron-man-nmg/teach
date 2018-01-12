@@ -297,8 +297,8 @@ function onBodyDown(event) {
 }
 
 function onRoleBodyDown(event) {
-    if (!(event.target.id == "menuBtn" || event.target.id == "menuContent" || $(
-            event.target).parents("#menuContent").length > 0)) {
+    if (!(event.target.id == "menuBtn" || event.target.id == "menuRoleContent" || $(
+            event.target).parents("#menuRoleContent").length > 0)) {
         UserInfoDlg.hideRoleSelectTree();
     }
 }
