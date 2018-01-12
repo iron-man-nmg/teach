@@ -7,7 +7,33 @@
     </select>
     <select id="treeByTeachId" resultType="com.nmg.teach.core.node.ZTreeNode">
         select id,`name` from less_clazz lc  JOIN  less_teach_clazz ltc ON ltc.clazz_id=lc.id
-        where ltc.teach_id=${teach_id}
+        where ltc.teacher_id=${teach_id}
     </select>
 
+    <select id="roleTreeListByTeacherId" resultType="com.nmg.teach.core.node.ZTreeNode">
+        SELECT
+        r.id ,
+        NAME AS "name",
+        (
+        CASE
+        WHEN (r1.ID = 0 OR r1.ID IS NULL) THEN
+        'false'
+        ELSE
+        'true'
+        END
+        ) "checked"
+        FROM
+        less_clazz r
+        LEFT JOIN (
+        SELECT
+        ID
+        FROM
+        less_clazz lc
+        WHERE
+        EXISTS (select 1 from less_teacher_clazz ltc where  ltc.clazz_id=lc.id and ltc.teacher_id=${teacher_id} )
+
+        ) r1 ON r.ID = r1.ID
+        ORDER BY
+        id ASC
+    </select>
 </mapper>

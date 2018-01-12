@@ -89,7 +89,23 @@ Teacher.delete = function () {
         ajax.start();
     }
 };
-
+/**
+ * 点击角色分配
+ * @param
+ */
+Teacher.clazzAssign = function () {
+    if (this.check()) {
+        var index = layer.open({
+            type: 2,
+            title: '班级分配',
+            area: ['300px', '400px'], //宽高
+            fix: false, //不固定
+            maxmin: true,
+            content: Feng.ctxPath + '/teacher/teacher_assign/' + this.seItem.id
+        });
+        this.layerIndex = index;
+    }
+};
 /**
  * 查询列表
  */

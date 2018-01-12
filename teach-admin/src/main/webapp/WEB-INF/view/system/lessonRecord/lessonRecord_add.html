@@ -9,24 +9,18 @@
             <div class="ibox-content">
                 <div class="row row-lg">
                     <div class="col-sm-12">
-                        <div class="row">
-                            <div class="col-sm-3">
-                                <label >老师：</label>
-                                <label value="${teachName}"/>
-                                <#input id="clazzId" name="班级" underline="true"  readonly="readonly" hidden="clazzId"
-                                        clickFun="LessonStudent.showClazzSelectTree(); return false;"
-                                        style="background-color: #ffffff !important;"/>
+                        <div class="col-lg-2 col-sm-3">
+                            <div class="panel panel-default">
+                                <div class="panel-heading">班级</div>
+                                <div class="panel-body clazz-tree">
+                                    <ul id="clazzTree" class="ztree"></ul>
+                                </div>
                             </div>
                         </div>
 
                         <#table id="LessonStudentTable"/>
                     </div>
                 </div>
-            </div>
-            <!-- 这是父级菜单下拉框 -->
-            <div id="menuClazzContent" class="menuContent"
-                 style="display: none; position: absolute; z-index: 200;">
-                <ul id="treeClazz" class="ztree tree-box" style="width: 250px !important;"></ul>
             </div>
         </div>
     </div>

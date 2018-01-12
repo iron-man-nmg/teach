@@ -1,9 +1,18 @@
 package com.nmg.teach.modular.system.controller;
 
+import com.baomidou.mybatisplus.mapper.EntityWrapper;
+import com.baomidou.mybatisplus.mapper.Wrapper;
+import com.nmg.teach.common.persistence.model.ClazzStudent;
+import com.nmg.teach.common.persistence.model.TeacherClazz;
+import com.nmg.teach.common.persistence.model.User;
 import com.nmg.teach.core.base.controller.BaseController;
 import com.nmg.teach.core.node.ZTreeNode;
+import com.nmg.teach.core.util.Convert;
+import com.nmg.teach.core.util.ToolUtil;
 import com.nmg.teach.modular.system.dao.ClazzDao;
 import com.nmg.teach.modular.system.dao.DeptDao;
+import com.nmg.teach.modular.system.service.IClazzStudentService;
+import com.nmg.teach.modular.system.service.ITeacherClazzService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -137,5 +146,20 @@ public class ClazzController extends BaseController {
     public List<ZTreeNode> treeListByTeachId(@PathVariable("teachId") Integer teachId) {
         List<ZTreeNode> tree = this.clazzDao.treeByTeachId(teachId);
         return tree;
+    }
+    /**
+     * 获取角色列表
+     */
+    @RequestMapping(value = "/clazzTreeListByTeacherId/{teacherId}")
+    @ResponseBody
+    public List<ZTreeNode> clazzTreeListByTeacherId(@PathVariable Integer teacherId) {
+
+        if (ToolUtil.isEmpty(teacherId)) {
+            List<ZTreeNode> clazzTreeList = this.clazzDao.tree();
+            return clazzTreeList;
+        } else {
+            List<ZTreeNode> roleTreeListByUserId = this.clazzDao.roleTreeListByTeacherId(teacherId);
+            return roleTreeListByUserId;
+        }
     }
 }

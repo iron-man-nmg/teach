@@ -3,9 +3,24 @@ package com.nmg.teach.modular.system.controller;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.mapper.Wrapper;
 import com.google.common.base.Strings;
+import com.nmg.teach.common.annotion.BussinessLog;
+import com.nmg.teach.common.annotion.Permission;
+import com.nmg.teach.common.constant.Const;
+import com.nmg.teach.common.constant.dictmap.UserDict;
+import com.nmg.teach.common.exception.BizExceptionEnum;
+import com.nmg.teach.common.persistence.dao.TeacherMapper;
+import com.nmg.teach.common.persistence.dao.UserMapper;
 import com.nmg.teach.common.persistence.model.Teacher;
+import com.nmg.teach.common.persistence.model.TeacherClazz;
+import com.nmg.teach.common.persistence.model.User;
 import com.nmg.teach.core.base.controller.BaseController;
+import com.nmg.teach.core.base.tips.Tip;
+import com.nmg.teach.core.db.Db;
+import com.nmg.teach.core.exception.TeachException;
 import com.nmg.teach.core.log.LogObjectHolder;
+import com.nmg.teach.core.util.Convert;
+import com.nmg.teach.core.util.ToolUtil;
+import com.nmg.teach.modular.system.service.ITeacherClazzService;
 import com.nmg.teach.modular.system.service.ITeacherService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -14,6 +29,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 控制器
@@ -29,6 +47,8 @@ public class TeacherController extends BaseController {
 
     @Autowired
     private ITeacherService teacherService;
+    @Autowired
+    private ITeacherClazzService teacherClazzService;
 
     /**
      * 跳转到首页
@@ -100,6 +120,18 @@ public class TeacherController extends BaseController {
         return super.SUCCESS_TIP;
     }
 
+    @Permission
+    @RequestMapping("/teacher_assign/{teacherId}")
+    public String roleAssign(@PathVariable Integer teacherId, Model model) {
+        if (ToolUtil.isEmpty(teacherId)) {
+            throw new TeachException(BizExceptionEnum.REQUEST_NULL);
+        }
+        Teacher teacher = (Teacher) Db.create(TeacherMapper.class).selectOneByCon("id", teacherId);
+        model.addAttribute("teacherId", teacherId);
+        model.addAttribute("teacherName", teacher.getName());
+        return PREFIX + "teacher_clazzAssign.html";
+    }
+
     /**
      * 详情
      */
@@ -107,5 +139,34 @@ public class TeacherController extends BaseController {
     @ResponseBody
     public Object detail(@PathVariable("teacherId") Integer teacherId) {
         return teacherService.selectById(teacherId);
+    }
+
+
+    /**
+     * 分配角色
+     */
+    @RequestMapping("/setClazz")
+    @BussinessLog(value = "分配角色", key = "teacherId,clazzIds", dict = UserDict.class)
+    @Permission(Const.ADMIN_NAME)
+    @ResponseBody
+    public Tip setClazz(@RequestParam("teacherId") Integer teacherId, @RequestParam("clazzIds") String clazzIds) {
+        if (ToolUtil.isOneEmpty(teacherId, clazzIds)) {
+            throw new TeachException(BizExceptionEnum.REQUEST_NULL);
+        }
+        //删除原来的班级
+        Wrapper<TeacherClazz> wrapper = new EntityWrapper<>();
+        wrapper.eq("teacher_id", teacherId);
+        teacherClazzService.delete(wrapper);
+        List<TeacherClazz> list = new ArrayList<>();
+        String[] strArray = Convert.toStrArray(",", clazzIds);
+        for (String clazzId : strArray) {
+            TeacherClazz teacherClazz = new TeacherClazz();
+            teacherClazz.setClazzId(Integer.valueOf(clazzId));
+            teacherClazz.setTeacherId(teacherId);
+            list.add(teacherClazz);
+        }
+        teacherClazzService.insertBatch(list);
+        //新增班级
+        return SUCCESS_TIP;
     }
 }
