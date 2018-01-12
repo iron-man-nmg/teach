@@ -7,13 +7,25 @@
             </div>
             <div class="ibox-content">
                 <div class="row row-lg">
-                    <div class="col-sm-12">
+                    <div class="col-sm-12 myupload">
                         <div class="row">
                             <span>教师信息：</span><a href="/file/templet/download?type=1">模板下载</a>
                         </div>
                         <div class="row">
                             <form action="/file/teacher/upload" enctype="multipart/form-data" method="post">
-                                <input type="file" name="file" />
+                                <input type="file" name="file" class="upload-input"/>
+                                <input type="submit" id="btn" value="点我上传文件">
+                            </form>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-12 myupload">
+                        <div class="row">
+                            <span>学生信息：</span><a href="/file/templet/download?type=2">模板下载</a>
+                        </div>
+                        <div class="row">
+                            <form action="/file/student/upload" enctype="multipart/form-data" method="post">
+                                <input type="file" name="file" class="upload-input"/>
                                 <input type="submit" id="btn" value="点我上传文件">
                             </form>
                         </div>
