@@ -120,13 +120,13 @@ public class StudentController extends BaseController {
     @ResponseBody
     @Transactional
     public Object add(Student student, @RequestParam Integer clazzId, @RequestParam Integer packId) {
-        int id = studentService.insertAndGetId(student);
-        if (id == 1) {
+        int result = studentService.insertAndGetId(student);
+        if (result < 1 ) {
             throw new TeachException(BizExceptionEnum.ADD_ERROR);
         }
         ClazzStudent clazzStudent = new ClazzStudent();
         clazzStudent.setClazzId(clazzId);
-        clazzStudent.setStudentId(id);
+        clazzStudent.setStudentId(student.getId());
         clazzStudentService.insert(clazzStudent);
 
 
@@ -134,7 +134,7 @@ public class StudentController extends BaseController {
 
         PackPackageStudent packPackageStudent = new PackPackageStudent();
         packPackageStudent.setPackageId(packId);
-        packPackageStudent.setStudentId(id);
+        packPackageStudent.setStudentId(student.getId());
         packPackageStudent.setRemainingHour(packPackage.getClazzHour());
         packPackageStudentService.insert(packPackageStudent);
         return super.SUCCESS_TIP;
