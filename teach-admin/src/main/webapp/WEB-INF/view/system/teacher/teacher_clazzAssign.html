@@ -12,7 +12,7 @@
 
         $("#btn_save").bind("click", function () {
             var ids = Feng.zTreeCheckedNodes("zTree");
-            var ajax = new $ax(Feng.ctxPath + "/teach/setClazz", function (data) {
+            var ajax = new $ax(Feng.ctxPath + "/teacher/setClazz", function (data) {
                 Feng.success("分配班级成功!");
                 window.parent.Teacher.table.refresh();
                 parent.layer.close(index);
@@ -43,7 +43,7 @@
             }
         };
 
-        var ztree = new $ZTree("zTree", "/role/roleTreeListByUserId/${userId}");
+        var ztree = new $ZTree("zTree", "/clazz/clazzTreeListByTeacherId/${teacherId}");
         ztree.setSettings(setting);
         ztree.init();
     }

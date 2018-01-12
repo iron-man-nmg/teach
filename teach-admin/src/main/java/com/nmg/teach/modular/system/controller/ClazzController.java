@@ -143,7 +143,7 @@ public class ClazzController extends BaseController {
      */
     @RequestMapping(value = "/treeListByTeachId")
     @ResponseBody
-    public List<ZTreeNode> treeListByTeachId(@PathVariable("teachId") Integer teachId) {
+    public List<ZTreeNode> treeListByTeachId(Integer teachId) {
         List<ZTreeNode> tree = this.clazzDao.treeByTeachId(teachId);
         return tree;
     }
@@ -158,7 +158,7 @@ public class ClazzController extends BaseController {
             List<ZTreeNode> clazzTreeList = this.clazzDao.tree();
             return clazzTreeList;
         } else {
-            List<ZTreeNode> roleTreeListByUserId = this.clazzDao.roleTreeListByTeacherId(teacherId);
+            List<ZTreeNode> roleTreeListByUserId = this.clazzDao.clazzTreeListByTeacherId(teacherId);
             return roleTreeListByUserId;
         }
     }

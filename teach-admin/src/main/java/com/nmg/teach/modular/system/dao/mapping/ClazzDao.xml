@@ -10,7 +10,7 @@
         where ltc.teacher_id=${teach_id}
     </select>
 
-    <select id="roleTreeListByTeacherId" resultType="com.nmg.teach.core.node.ZTreeNode">
+    <select id="clazzTreeListByTeacherId" resultType="com.nmg.teach.core.node.ZTreeNode">
         SELECT
         r.id ,
         NAME AS "name",
@@ -30,7 +30,7 @@
         FROM
         less_clazz lc
         WHERE
-        EXISTS (select 1 from less_teacher_clazz ltc where  ltc.clazz_id=lc.id and ltc.teacher_id=${teacher_id} )
+        EXISTS (select 1 from less_teacher_clazz ltc where  ltc.clazz_id=lc.id and ltc.teacher_id=${teacherId} )
 
         ) r1 ON r.ID = r1.ID
         ORDER BY

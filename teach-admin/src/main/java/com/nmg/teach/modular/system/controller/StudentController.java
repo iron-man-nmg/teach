@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -89,7 +90,10 @@ public class StudentController extends BaseController {
     @RequestMapping(value = "/list")
     @ResponseBody
     public Object list(@RequestParam(required = false) Integer clazzId, @RequestParam(required = false) String name) {
-        List<Map<String, Object>> list = studentDao.selectStudents(name, clazzId);
+        List<Map<String, Object>> list =new ArrayList<>();
+        if(clazzId!=null) {
+            list = studentDao.selectStudents(name, clazzId);
+        }
         return new StudentWarpper(list).warp();
     }
 

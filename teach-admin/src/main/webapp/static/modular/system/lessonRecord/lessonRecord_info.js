@@ -14,7 +14,7 @@ var LessonStudent = {
 LessonStudent.initColumn = function () {
     return [
         {field: 'selectItem', check: true},
-        {title: '姓名', field: 'studentName', visible: true, align: 'center', valign: 'middle'},
+        {title: '姓名', field: 'name', visible: true, align: 'center', valign: 'middle'},
         {title: '套餐', field: 'packName', visible: true, align: 'center', valign: 'middle'},
         {title: '剩余课时', field: 'remainHour', visible: true, align: 'center', valign: 'middle'}
     ];
@@ -42,17 +42,17 @@ LessonStudent.onClickClazz = function (e, treeId, treeNode) {
  */
 LessonStudent.search = function () {
     var queryData = {};
-    queryData['clazzId'] = $("#clazzId").val();
+    queryData['clazzId'] = LessonStudent.clazzId;
     LessonStudent.table.refresh({query: queryData});
 };
 
 $(function () {
     var defaultColunms = LessonStudent.initColumn();
-    var table = new BSTable(LessonStudent.id, "/listStudent/list", defaultColunms);
+    var table = new BSTable(LessonStudent.id, "/student/list", defaultColunms);
     table.setPaginationType("client");
     LessonStudent.table = table.init();
 
-    var ztreeClazz = new $ZTree("clazzTree", "/clazz/treeListByTeachId?teachId="+LessonStudent.get("teachId"));
+    var ztreeClazz = new $ZTree("clazzTree", "/clazz/clazzTreeListByTeacherId/"+$("#teacherId").val());
     ztreeClazz.bindOnClick(LessonStudent.onClickClazz);
     ztreeClazz.init();
 });

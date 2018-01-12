@@ -81,8 +81,8 @@ LessonRecordController extends BaseController {
             throw new TeachException(BizExceptionEnum.TEACH_NULL);
         }
 
-        model.addAttribute("teachId", teachers.get(0).getId());
-        model.addAttribute("teachName", teachers.get(0).getName());
+        model.addAttribute("teacherId", teachers.get(0).getId());
+        model.addAttribute("teacherName", teachers.get(0).getName());
         LogObjectHolder.me().set(model);
         return PREFIX + "lessonRecord_add.html";
     }

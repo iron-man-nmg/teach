@@ -146,8 +146,7 @@ public class TeacherController extends BaseController {
      * 分配角色
      */
     @RequestMapping("/setClazz")
-    @BussinessLog(value = "分配角色", key = "teacherId,clazzIds", dict = UserDict.class)
-    @Permission(Const.ADMIN_NAME)
+    @BussinessLog(value = "分配角色", key = "teacherId,clazzIds")
     @ResponseBody
     public Tip setClazz(@RequestParam("teacherId") Integer teacherId, @RequestParam("clazzIds") String clazzIds) {
         if (ToolUtil.isOneEmpty(teacherId, clazzIds)) {

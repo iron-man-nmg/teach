@@ -23,7 +23,7 @@
                 AND ls.name like CONCAT('%',#{name},'%'))
             </if>
             <if test="clazzId != null ">
-                AND lc.id = clazzId
+                AND lc.id = ${clazzId}
             </if>
         </trim>
         order by id ASC ;

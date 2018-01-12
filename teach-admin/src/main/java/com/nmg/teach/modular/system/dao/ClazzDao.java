@@ -29,6 +29,6 @@ public interface ClazzDao {
      * @return
      * @date 2017年2月18日 上午10:32:04
      */
-    List<ZTreeNode> roleTreeListByTeacherId(int teacherId);
+    List<ZTreeNode> clazzTreeListByTeacherId(@Param("teacherId") Integer teacherId);
 
 }
