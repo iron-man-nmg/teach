@@ -48,7 +48,7 @@ LessonStudent.search = function () {
 
 $(function () {
     var defaultColunms = LessonStudent.initColumn();
-    var table = new BSTable(LessonStudent.id, "/student/list", defaultColunms);
+    var table = new BSTable(LessonStudent.id, "/student/listByClazzId", defaultColunms);
     table.setPaginationType("client");
     LessonStudent.table = table.init();
 

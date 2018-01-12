@@ -2,8 +2,10 @@ package com.nmg.teach.modular.system.controller;
 
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.mapper.Wrapper;
+import com.nmg.teach.common.exception.BizExceptionEnum;
 import com.nmg.teach.common.persistence.model.*;
 import com.nmg.teach.core.base.controller.BaseController;
+import com.nmg.teach.core.exception.TeachException;
 import com.nmg.teach.core.log.LogObjectHolder;
 import com.nmg.teach.modular.system.dao.StudentDao;
 import com.nmg.teach.modular.system.service.*;
@@ -90,9 +92,23 @@ public class StudentController extends BaseController {
     @RequestMapping(value = "/list")
     @ResponseBody
     public Object list(@RequestParam(required = false) Integer clazzId, @RequestParam(required = false) String name) {
-        List<Map<String, Object>> list =new ArrayList<>();
-        if(clazzId!=null) {
-            list = studentDao.selectStudents(name, clazzId);
+        if (clazzId != null && clazzId == 0) {
+            clazzId = null;
+        }
+        List<Map<String, Object>> list = studentDao.selectStudents(name, clazzId);
+
+        return new StudentWarpper(list).warp();
+    }
+
+    /**
+     * 获取列表
+     */
+    @RequestMapping(value = "/listByClazzId")
+    @ResponseBody
+    public Object listByClazzId(@RequestParam(required = false) Integer clazzId) {
+        List<Map<String, Object>> list = new ArrayList<>();
+        if (clazzId != null) {
+            list = studentDao.selectStudents("", clazzId);
         }
         return new StudentWarpper(list).warp();
     }
@@ -105,6 +121,9 @@ public class StudentController extends BaseController {
     @Transactional
     public Object add(Student student, @RequestParam Integer clazzId, @RequestParam Integer packId) {
         int id = studentService.insertAndGetId(student);
+        if (id == 1) {
+            throw new TeachException(BizExceptionEnum.ADD_ERROR);
+        }
         ClazzStudent clazzStudent = new ClazzStudent();
         clazzStudent.setClazzId(clazzId);
         clazzStudent.setStudentId(id);

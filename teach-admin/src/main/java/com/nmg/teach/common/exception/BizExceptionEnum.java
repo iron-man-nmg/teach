@@ -54,7 +54,8 @@ public enum BizExceptionEnum implements ServiceExceptionEnum {
 	REQUEST_NULL(400, "请求有错误"),
 	SESSION_TIMEOUT(400, "会话超时"),
 	SERVER_ERROR(500, "服务器异常"),
-	TEACH_NULL(400, "老师不存在");
+	TEACH_NULL(400, "老师不存在"),
+	ADD_ERROR(400, "");
 	BizExceptionEnum(int code, String message) {
 		this.code = code;
 		this.message = message;
