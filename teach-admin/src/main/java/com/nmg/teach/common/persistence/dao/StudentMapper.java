@@ -12,5 +12,5 @@ import com.baomidou.mybatisplus.mapper.BaseMapper;
  * @since 2018-01-08
  */
 public interface StudentMapper extends BaseMapper<Student> {
-     int  insertAndGetId(Student student);
+     int insertAndGetId(Student student);
 }

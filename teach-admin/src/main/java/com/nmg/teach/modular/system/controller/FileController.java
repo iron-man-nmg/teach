@@ -1,8 +1,10 @@
 package com.nmg.teach.modular.system.controller;
 
+import com.nmg.teach.common.persistence.model.Student;
 import com.nmg.teach.common.persistence.model.Teacher;
 import com.nmg.teach.core.base.controller.BaseController;
 import com.nmg.teach.core.util.POIUtil;
+import com.nmg.teach.modular.system.service.impl.StudentServiceImpl;
 import com.nmg.teach.modular.system.service.impl.TeacherServiceImpl;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -32,7 +34,12 @@ public class FileController extends BaseController {
     @Resource
     TeacherServiceImpl teacherService;
 
-    private static final String[] fields = new String[]{"name", "mobile", "sex"};
+    @Resource
+    StudentServiceImpl studentService;
+
+    private static final String[] teacherFields = new String[]{"name", "mobile", "sex"};
+
+    private static final String[] studentFields = new String[]{"name", "contactPhone", "sex"};
     private String PREFIX = "/file/";
     private String SUFFIX = "xlsx";
 
@@ -45,12 +52,16 @@ public class FileController extends BaseController {
     }
 
     /**
-     * 跳转到首页
+     * 导入老师信息
+     * @param file
+     * @param model
+     * @return
+     * @throws IOException
      */
     @RequestMapping(value = "/teacher/upload")
     @ResponseBody
-    public String uploadXls(MultipartFile file, Model model) throws IOException {
-        List<Teacher> teacherList = POIUtil.parseToList("xlsx", file.getInputStream(), Teacher.class, fields);
+    public String uploadTeacher(MultipartFile file, Model model) throws IOException {
+        List<Teacher> teacherList = POIUtil.parseToList("xlsx", file.getInputStream(), Teacher.class, teacherFields);
 
         if (CollectionUtils.isEmpty(teacherList)) {
             return "表格内容为空！";
@@ -59,6 +70,33 @@ public class FileController extends BaseController {
         for (Teacher teacher : teacherList) {
             try {
                 teacherService.insert(teacher);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
+        return "success";
+    }
+
+    /**
+     * 导入学生信息
+     * @param file
+     * @param model
+     * @return
+     * @throws IOException
+     */
+    @RequestMapping(value = "/student/upload")
+    @ResponseBody
+    public String uploadStudent(MultipartFile file, Model model) throws IOException {
+        List<Student> studentList = POIUtil.parseToList("xlsx", file.getInputStream(), Student.class, studentFields);
+
+        if (CollectionUtils.isEmpty(studentList)) {
+            return "表格内容为空！";
+        }
+
+        for (Student stu : studentList) {
+            try {
+                studentService.insert(stu);
             } catch (Exception e) {
                 e.printStackTrace();
             }

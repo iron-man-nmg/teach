@@ -6,6 +6,8 @@ import com.nmg.teach.modular.system.service.IStudentService;
 import com.baomidou.mybatisplus.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
+
 /**
  * <p>
  * 学生表 服务实现类
@@ -17,6 +19,8 @@ import org.springframework.stereotype.Service;
 @Service
 public class StudentServiceImpl extends ServiceImpl<StudentMapper, Student> implements IStudentService {
 	public int  insertAndGetId(Student student){
+	    student.setCreateTime(new Date());
+	    student.setUpdateTime(new Date());
 	    return baseMapper.insertAndGetId(student);
     }
 }

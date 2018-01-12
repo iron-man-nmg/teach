@@ -20,6 +20,6 @@
     </sql>
 	<insert id="insertAndGetId" useGeneratedKeys="true" keyProperty="id" parameterType="com.nmg.teach.common.persistence.model.Student">
 		insert into less_student(`name`,contact_phone,sex,photo_url)
-		values(#{name},#{contactPhone},#{sex},#{photoUrl})
+		values(#{name},#{contactPhone},#{sex},#{photoUrl}),now(),now()
 	</insert>
 </mapper>
