@@ -185,7 +185,7 @@ UserInfoDlg.hideDeptSelectTree = function () {
  */
 UserInfoDlg.hideRoleSelectTree = function () {
     $("#menuRoleContent").fadeOut("fast");
-    $("body").unbind("mousedown", onBodyDown);// mousedown当鼠标按下就可以触发，不用弹起
+    $("body").unbind("mousedown", onRoleBodyDown);// mousedown当鼠标按下就可以触发，不用弹起
 };
 
 /**
