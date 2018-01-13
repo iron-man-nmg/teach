@@ -26,7 +26,7 @@ public class TeachGeneratorConfig extends AbstractGeneratorConfig {
         dataSourceConfig.setDriverName("com.mysql.jdbc.Driver");
         dataSourceConfig.setUsername("root");
         dataSourceConfig.setPassword("root");
-        dataSourceConfig.setUrl("jdbc:mysql://122.152.221.242:3306/adi_user_center?characterEncoding=utf8");
+        dataSourceConfig.setUrl("jdbc:mysql://127.0.0.1:3306/adi_user_center?characterEncoding=utf8");
     }
 
     protected void strategyConfig() {
