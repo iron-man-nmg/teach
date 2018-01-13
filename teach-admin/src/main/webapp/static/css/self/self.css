@@ -1,0 +1,13 @@
+@charset "UTF-8";
+
+.myupload {
+    margin: 20px 10px;
+}
+
+input.upload-input {
+    display: inline;
+}
+
+.nmg .fixed-table-toolbar {
+    display: none;
+}
